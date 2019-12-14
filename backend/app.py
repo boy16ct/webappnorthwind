@@ -50,6 +50,14 @@ def user_insert():
     result = {}
     result['message'] = s1
     return jsonify(result), 200
+@app.route('/user/', methods=['GET'])
+def getuser():
+    data = request.json
+    c2 = do.Customer(ConnectionData)
+    s1 = c2.selectAll()
+    result = {}
+    result['data'] = s1
+    return jsonify(result), 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
