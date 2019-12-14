@@ -2,8 +2,10 @@ from flask import Flask, jsonify, request
 import os
 import BusinessObjects as bo 
 import DataObjects as do
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 db_ip = os.getenv('db_ip') #'10.0.2.15'
 ConnectionData = {}
