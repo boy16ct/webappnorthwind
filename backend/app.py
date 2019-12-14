@@ -52,7 +52,7 @@ def user_insert():
     result = {}
     result['message'] = s1
     return jsonify(result), 200
-@app.route('/user/', methods=['GET'])
+@app.route('/user', methods=['GET'])
 def getuser():
     data = request.json
     c2 = do.Customer(ConnectionData)

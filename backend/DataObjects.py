@@ -1,4 +1,5 @@
 import psycopg2
+from psycopg2.extras import RealDictCursor
 class Customer:
     def __init__(self, ConnectionData):
         self.ConnectionData = ConnectionData
@@ -22,7 +23,7 @@ class Customer:
         finally:
             if con is not None:
                 con.close()
-    def selectAll(self, customer):
+    def selectAll(self):
         con = None
         try:
             con = psycopg2.connect(user=self.ConnectionData['user'],
@@ -30,12 +31,13 @@ class Customer:
                                   host=self.ConnectionData['host'],
                                   port=self.ConnectionData['port'],
                                   database=self.ConnectionData['database'])
-            cur = con.cursor()
+            cur = con.cursor(cursor_factory=RealDictCursor)
             sql = "SELECT * FROM TblCustomers"
             cur.execute(sql)
+            record = cur.fetchall()
             con.commit()
             con.close()
-            return 'Insert TblCustomers successfully'
+            return record
         except (Exception, psycopg2.DatabaseError) as error:
             return str(error)
         finally:
